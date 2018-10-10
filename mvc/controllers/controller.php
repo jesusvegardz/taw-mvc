@@ -59,7 +59,7 @@ class MvcController{
 	#Ingreso de usuarios
 	public function loginController(){
 
-		if (isset($_POST['usuario'])) {
+		if (isset($_POST['usuario'], isset($_POST['password']))) {
 			$usuario = array(
 				'usuario' => $_POST['usuario'],
 				'password' => $_POST['password']			
