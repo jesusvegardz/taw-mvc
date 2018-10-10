@@ -68,10 +68,10 @@ class Datos extends Conexion{
 		$stmt->close();
 	}
 
-	public function getPassword($id, $tabla){
+	public function getPassword($usuario, $tabla){
 		$db = Conexion::conectar();
-		$stmt= $db->prepare("SELECT password FROM $tabla WHERE id = :id");
-		$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+		$stmt= $db->prepare("SELECT password FROM $tabla WHERE usuario = :usuario");
+		$stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
 		$stmt->execute();
 
 		return $stmt->fetch();

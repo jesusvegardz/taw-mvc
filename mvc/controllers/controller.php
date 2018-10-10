@@ -58,7 +58,9 @@ class MvcController{
 
 	#Ingreso de usuarios
 	public function loginController(){
-
+		if (isset($_GET['password'])) {
+			$password= $_GET['password'];
+		}
 		if (isset($_POST['usuario']) && isset($_POST['password'])) {
 			$usuario = array(
 				'usuario' => $_POST['usuario'],
@@ -72,9 +74,9 @@ class MvcController{
 				session_start();
 				$_SESSION['validar'] = true;
 
-				header('location:index.php?action=usuarios');
+				header('location:index.php?action=usuarios&usuario='.$respuesta["usuario"].'');
 			} else {
-				header('location:index.php?action=fallo');
+				header('location:index.php?action=fallo'); 
 			}
 		}
 
@@ -83,6 +85,9 @@ class MvcController{
 	#Listado de usuarios
 	public function getUsers(){
 		$respuesta = Datos::getUsers('usuarios');
+		if (isset($_GET['usuario'])) {
+			$usuario= $_GET['usuario'];
+		}
 
 		foreach ($respuesta as $usuario => $item) {
 			echo '<tr>
@@ -91,7 +96,7 @@ class MvcController{
 				<td>'.$item["password"].'</td>
 				<td>'.$item["email"].'</td>
 				<td><a href="index.php?action=editar&id='.$item["id"].'"><button>Editar</button></a></td>
-				<td><a href="index.php?action=eliminar&idBorrar='.$item["id"].'"><button>Borrar</button></a></td>
+				<td><a href="index.php?action=eliminar&usuario='.$_GET['usuario'].'&idBorrar='.$item["id"].'"><button>Borrar</button></a></td>
 			</tr>';
 		}		
 	}
@@ -138,23 +143,27 @@ class MvcController{
 			
 	}
 
-	public function getPassword(){
-		if (isset($_GET['id'])) {
-			$id= $_GET['id'];
-			$respuesta = Datos::getPassword($id, 'usuarios');
+	public function getPasswordController(){
+		if (isset($_POST['password']) && isset($_GET['usuario'])) {
+			$password= $_POST['password'];
+			$usuario= $_GET['usuario'];
 
-			/*echo '<input type="text" name="password" required>
-			  <input type="submit" value="Confirmar">;'*/
+			$respuesta = Datos::getPassword($usuario, 'usuarios');
+			if ($respuesta['password'] == $_POST['password']) {	
+				MvcController::borrarUsuario();
+			}else{
+				echo 'Contraseña Incorrecta';
+			}
 		}
-		
-
 	}
 
 	public function borrarUsuario(){
-		if (isset($_GET['idBorrar'])) {
+		if (isset($_GET['idBorrar']) && isset($_GET['usuario'])) {
+			$usuario= $_GET['usuario'];
+
 			$respuesta = Datos::deleteUser($_GET['idBorrar'], 'usuarios');
 			if($respuesta == "success"){
-				header("location:index.php?action=usuarios");
+				header('location:index.php?usuario='.$_GET['usuario'].'&action=usuarios');
 			} else {
 				echo 'Error al eliminar usuario';
 			}

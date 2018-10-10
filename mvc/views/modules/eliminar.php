@@ -19,7 +19,7 @@
 <?php
 
 $borrar = new MvcController();
-//$borrar->borrarUsuario();
+$borrar->getPasswordController();
 
 
 ?>

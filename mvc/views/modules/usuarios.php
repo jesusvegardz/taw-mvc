@@ -4,6 +4,9 @@
 		header('location:index.php?action=ingresar');
 		exit();
 	}
+	if (isset($_GET['password'])) {
+		$password= $_GET['password'];
+	}
 ?>
 
 <h1>USUARIOS</h1>
@@ -28,7 +31,7 @@
 			<?php 
 				$listado = new MvcController();
 				$listado->getUsers();
-				//$listado->borrarUsuario();
+				//$listado->getPasswordController();
 			?>
 
 		</tbody>
