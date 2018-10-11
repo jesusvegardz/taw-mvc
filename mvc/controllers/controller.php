@@ -58,9 +58,9 @@ class MvcController{
 
 	#Ingreso de usuarios
 	public function loginController(){
-		if (isset($_GET['password'])) {
+		/*if (isset($_GET['password'])) {
 			$password= $_GET['password'];
-		}
+		}*/
 		if (isset($_POST['usuario']) && isset($_POST['password'])) {
 			$usuario = array(
 				'usuario' => $_POST['usuario'],
@@ -85,8 +85,9 @@ class MvcController{
 	#Listado de usuarios
 	public function getUsers(){
 		$respuesta = Datos::getUsers('usuarios');
-		if (isset($_GET['usuario'])) {
-			$usuario= $_GET['usuario'];
+							
+		if (isset($_GET["usuario"])) {
+		$usuario= $_GET["usuario"];
 		}
 
 		foreach ($respuesta as $usuario => $item) {
@@ -95,10 +96,12 @@ class MvcController{
 				<td>'.$item["usuario"].'</td>
 				<td>'.$item["password"].'</td>
 				<td>'.$item["email"].'</td>
-				<td><a href="index.php?action=editar&id='.$item["id"].'"><button>Editar</button></a></td>
-				<td><a href="index.php?action=eliminar&usuario='.$_GET['usuario'].'&idBorrar='.$item["id"].'"><button>Borrar</button></a></td>
+				<td><a href="index.php?action=editar&usuario='.$_GET["usuario"].'&id='.$item["id"].'"><button>Editar</button></a></td>
+				<td><a href="index.php?action=eliminar&usuario='.$_GET["usuario"].'&idBorrar='.$item["id"].'"><button>Borrar</button></a></td>
+
 			</tr>';
-		}		
+
+		}			
 	}
 
 	public function getUser(){

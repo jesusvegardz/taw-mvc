@@ -3,10 +3,13 @@
 	if (!$_SESSION['validar']) {
 		header('location:index.php?action=ingresar');
 		exit();
+
+		if (isset($_GET['Usuario'])) {
+		$Usuario= $_GET['Usuario'];
+		}
 	}
-	if (isset($_GET['password'])) {
-		$password= $_GET['password'];
-	}
+
+
 ?>
 
 <h1>USUARIOS</h1>

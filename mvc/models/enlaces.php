@@ -3,12 +3,22 @@
 class Paginas{
 	
 	public function enlacesPaginasModel($enlaces){
-
+		if (isset($_GET['usuario'])) {
+			$usuario= $_GET['usuario'];
 
 		if($enlaces == "ingresar" || $enlaces == "usuarios" || $enlaces == "editar" || $enlaces == "eliminar" || 
 			$enlaces == "salir"){
 
 			$module =  "views/modules/".$enlaces.".php";
+
+		}
+	}
+
+		else if($enlaces == "ingresar" || $enlaces == "usuarios" || $enlaces == "editar" || $enlaces == "eliminar" || 
+			$enlaces == "salir"){
+
+			$module =  "views/modules/".$enlaces.".php";
+
 		
 		} else if($enlaces == "index"){
 
@@ -16,7 +26,7 @@ class Paginas{
 		
 		} else if($enlaces == "ok"){
 
-			$module =  "views/modules/registro.php";
+			$module =  "views/modules/ingresar.php";
 		
 		} else if($enlaces == "fallo"){
 
@@ -28,12 +38,11 @@ class Paginas{
 		
 		} else{
 
-			$module =  "views/modules/registro.php";
+			$module =  "views/modules/ingresar.php";
 
 		}
 		
 		return $module;
-
 	}
 
 }
